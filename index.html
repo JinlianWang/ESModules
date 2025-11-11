@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>My Math Demo</title>
+
+    <!-- Import map: central place to point the specifier to the built ES module -->
+    <script type="importmap">
+    {
+      "imports": {
+        "my-math": "/dist/my-math.es.js"
+      }
+    }
+    </script>
+
+    <!-- Optional preload to reduce a network roundtrip -->
+    <link rel="modulepreload" href="/dist/my-math.es.js">
+</head>
+
+<body>
+    <h1>Open the console</h1>
+    <div id="out"></div>
+
+    <!-- App entry -->
+    <script type="module" src="/src/index.js"></script>
+</body>
+
+</html>
