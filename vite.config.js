@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { copyFileSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { copyFileSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 
 const rootDir = dirname(fileURLToPath(import.meta.url));
 const libEntry = resolve(rootDir, 'lib/index.js');
@@ -33,8 +33,17 @@ function demoAssetsPlugin() {
   };
 }
 
+function cleanDistPlugin() {
+  return {
+    name: 'clean-dist-plugin',
+    buildStart() {
+      rmSync(distDir, { recursive: true, force: true });
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [demoAssetsPlugin()],
+  plugins: [cleanDistPlugin(), demoAssetsPlugin()],
   resolve: {
     // Let the dev server resolve `my-math` straight to the source entry.
     alias: {

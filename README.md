@@ -15,7 +15,7 @@ npm install
 | Command | Description |
 | --- | --- |
 | `npm run dev` | Starts Vite's dev server for rapid iteration. The alias in `vite.config.js` resolves `my-math` directly to `lib/index.js`, so no build step is required. |
-| `npm run build` | Produces the distributable ES module (`dist/my-math.es.js`) and copies the demo HTML + `src/` folder into `dist/` so it can be previewed statically. |
+| `npm run build` | Cleans `dist/`, produces the distributable (minified) ES module (`dist/my-math.es.js`), and copies the demo HTML + `src/` folder into `dist/` so it can be previewed statically. Override minification per run with `npm run build -- --minify false`. |
 | `npm run preview` | Serves the contents of `dist/` to verify the production bundle. Run `npm run build` first. |
 
 ## Project layout
@@ -34,7 +34,7 @@ vite.config.js        # Vite library-mode configuration
 
 ## How it works
 1. `lib/index.js` is the build entry and re-exports everything that should ship in the library bundle.
-2. `npm run build` runs Vite in library mode, emitting `dist/my-math.es.js` and copying `index.html` + `src/` into `dist/` via a small post-build plugin.
+2. `npm run build` runs Vite in library mode. A pre-build plugin wipes `dist/` to avoid stale artifacts, then Vite emits a minified `dist/my-math.es.js` and copies `index.html` + `src/` into `dist/` via a post-build plugin. Pass `--minify false` if you need readable identifiers for debugging.
 3. `index.html` defines an import map so the browser can resolve `import { sumThree } from 'my-math'` inside any shell without bundling; the dev server uses the alias instead of the built file.
 4. `src/index.js` acts as the host that mounts `src/header.js` and `src/catalog.js`, leaving the footer root empty until it is explicitly requested. Each shell calls `sumThree` with unique inputs and writes the value into its own DOM root, showing how multiple independently-owned sections can depend on the same shared bundle.
 5. The library increments a global `__MY_MATH_LOAD_COUNT__` the first time it is executed and exposes `getLoadCount()`, letting every shell surface the shared load count (it should stay at `1` no matter how many sections import it).
@@ -54,7 +54,13 @@ After `npm run build`, the `dist/` folder contains:
 - Update `src/index.js` (or create additional demos/tests) to exercise the new API.
 - Re-run `npm run build` to produce an updated bundle.
 
+## Building without minification
+- By default `npm run build` emits a minified `dist/my-math.es.js` for production parity.
+- For debugging, run `npm run build -- --minify false` to keep identifiers readable without touching `vite.config.js`.
+- Alternatively, set `build.minify = false` locally if you want multiple consecutive non-minified builds; just reset it before committing.
+
 ## Troubleshooting
 - If the browser cannot resolve `my-math`, ensure `npm run dev` is running (for dev) or that `npm run build` was executed (for preview/prod) so `dist/my-math.es.js` and the copied demo assets exist.
 - `dist/` is git-ignored; if you need a fresh preview, re-run `npm run build`.
+- The build step automatically removes `dist/` before emitting new files, so you rarely need to clean manually.
 - For cache issues during development, prefer `npm run dev` to leverage Vite's module graph instead of loading from `dist/`.
