@@ -1,6 +1,6 @@
 # My Math Demo
 
-A minimal ES module library and browser demo built with Vite. The repo shows how to author a small math utility library, bundle it with Vite's library mode, and consume the result directly in the browser via import maps.
+A minimal ES module library and browser demo built with Vite. The repo shows how to author a small math utility library, bundle it with Vite's library mode, and consume the result directly in the browser via import maps. For contribution policies, see [Repository Guidelines](AGENTS.md).
 
 ## Prerequisites
 - Node.js 18+ (works with any version supported by Vite 5)
