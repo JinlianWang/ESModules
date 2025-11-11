@@ -19,8 +19,12 @@
 </head>
 
 <body>
-    <h1>Open the console</h1>
-    <div id="out"></div>
+    <h1>Micro Frontend Math Demo</h1>
+    <p>Header, catalog, and footer shells all import <code>my-math.es.js</code> and render their own calculations.</p>
+
+    <section id="header-root" class="mf-section"></section>
+    <section id="catalog-root" class="mf-section"></section>
+    <section id="footer-root" class="mf-section"></section>
 
     <!-- App entry -->
     <script type="module" src="/src/index.js"></script>

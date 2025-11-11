@@ -1,5 +1,8 @@
-import { sumThree } from 'my-math';
+import { mountHeader } from './header.js';
+import { mountCatalog } from './catalog.js';
+import { mountFooter } from './footer.js';
 
-const result = sumThree(1, 2, 3);
-console.log('1 + 2 + 3 =', result);
-document.getElementById('out').textContent = `1 + 2 + 3 = ${result}`;
+// Acts as the micro-frontend host by booting each isolated shell.
+mountHeader();
+mountCatalog();
+mountFooter();

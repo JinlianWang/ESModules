@@ -2,8 +2,8 @@
 
 ## Project Structure & Module Organization
 - `lib/` holds the publishable ES modules. `lib/math.js` defines primitives, `lib/advancedMath.js` composes helpers, and `lib/index.js` re-exports the public API consumed during builds.
-- `src/` contains the browser demo entry (`src/index.js`) that exercises the library via the import map in `index.html`. Update this demo whenever you add new exports to keep end-to-end coverage.
-- `index.html` wires the import map and attaches the script; keep it minimal so the copy step in `vite.config.js` remains simple.
+- `src/` now represents a micro-frontend host: `src/index.js` boots the shell triad (`header.js`, `catalog.js`, `footer.js`), each mounting into its own root and calling `sumThree` with different arguments.
+- `index.html` wires the import map and declares the shell root elements; keep it minimal so the copy step in `vite.config.js` remains simple.
 - `dist/` is generated; never edit by hand. After `npm run build`, expect `dist/my-math.es.js`, the demo HTML, and a mirrored `src/` directory.
 
 ## Build, Test, and Development Commands
@@ -19,7 +19,8 @@
 
 ## Testing Guidelines
 - There is no formal test harness yet; rely on the browser demo as a smoke test by running `npm run dev` (development) or `npm run preview` (production bundle).
-- When adding new behavior, update `src/index.js` with a minimal showcase and log assertions to the console. If you add automated tests, place them under `src/` or a new `tests/` folder and document the command.
+- Verify that each shell renders independently: header should show `sumThree(2,3,4)`, catalog `sumThree(5,10,15)`, and footer `sumThree(7,8,9)`. Adjust inputs if you add more shells.
+- When adding new behavior, update or add a shell module that demonstrates it and, optionally, log assertions to the console. If you add automated tests, place them under `src/` or a new `tests/` folder and document the command.
 
 ## Commit & Pull Request Guidelines
 - Follow the existing concise, imperative commit style (`Fix Vite config and ignore dist outputs`). Keep subject lines under 72 characters and explain rationale in the body when necessary.
