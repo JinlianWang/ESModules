@@ -20,15 +20,16 @@ npm install
 
 ## Project layout
 ```
-index.html          # Demo page wiring the app + import map + shell roots
-src/index.js        # Micro-frontend host that mounts all section shells
-src/header.js       # Header shell importing sumThree(2,3,4)
-src/catalog.js      # Catalog shell importing sumThree(5,10,15)
-src/footer.js       # Footer shell importing sumThree(7,8,9)
-lib/math.js         # Primitive math helpers (add, multiply)
-lib/advancedMath.js # Higher-level helpers (e.g., sumThree)
-lib/index.js        # Library public API + load-count instrumentation
-vite.config.js      # Vite library-mode configuration
+index.html            # Demo page wiring the app + import map + shell roots
+src/index.js          # Micro-frontend host that mounts all section shells
+src/header.js         # Header shell importing sumThree(2,3,4)
+src/catalog.js        # Catalog shell importing sumThree(5,10,15) + lazy widget loader
+src/footer.js         # Footer shell importing sumThree(7,8,9)
+src/happy-face-widget.js # Dependency-free Web Component drawing ASCII art
+lib/math.js           # Primitive math helpers (add, multiply)
+lib/advancedMath.js   # Higher-level helpers (e.g., sumThree)
+lib/index.js          # Library public API + load-count instrumentation
+vite.config.js        # Vite library-mode configuration
 ```
 
 ## How it works
@@ -37,6 +38,7 @@ vite.config.js      # Vite library-mode configuration
 3. `index.html` defines an import map so the browser can resolve `import { sumThree } from 'my-math'` inside any shell without bundling; the dev server uses the alias instead of the built file.
 4. `src/index.js` acts as the host that mounts `src/header.js`, `src/catalog.js`, and `src/footer.js`. Each shell calls `sumThree` with unique inputs and writes the value into its own DOM root, showing how multiple independently-owned sections can depend on the same shared bundle.
 5. The library increments a global `__MY_MATH_LOAD_COUNT__` the first time it is executed and exposes `getLoadCount()`, letting every shell surface the shared load count (it should stay at `1` no matter how many sections import it).
+6. The catalog shell includes a "Load Happy Face Widget" button. Clicking it lazy-loads `src/happy-face-widget.js` via dynamic `import()`, registers a Web Component that renders ASCII art, and injects it into the catalog slot without pulling any additional dependencies.
 
 ## Distribution output
 After `npm run build`, the `dist/` folder contains:
