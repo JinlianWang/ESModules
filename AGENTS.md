@@ -9,7 +9,7 @@
 ## Build, Test, and Development Commands
 - `npm install` installs the single dependency (Vite 5).
 - `npm run dev` starts the Vite dev server with the alias that maps `my-math` directly to `lib/index.js`; use it for iterative development.
-- `npm run build` runs Vite in library mode, cleans `dist/` via a pre-build plugin, emits a minified bundle by default, and triggers the post-build copy defined in `vite.config.js` so the demo can import the built bundle. Pass `--minify false` if you need a readable build artifact.
+- `npm run build` runs Vite in library mode, cleans `dist/` via a pre-build plugin, and minifies both the library bundle and the copied demo `.js` files by default. Passing `--minify false` disables minification everywhere (library + demo) so you can debug readable builds.
 - `npm run preview` serves `dist/` to validate the production artifacts; always run `npm run build` first.
 
 ## Coding Style & Naming Conventions
