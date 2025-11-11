@@ -61,6 +61,6 @@ After `npm run build`, the `dist/` folder contains:
 
 ## Troubleshooting
 - If the browser cannot resolve `my-math`, ensure `npm run dev` is running (for dev) or that `npm run build` was executed (for preview/prod) so `dist/my-math.es.js` and the copied demo assets exist.
-- `dist/` is git-ignored; if you need a fresh preview, re-run `npm run build`.
+- `dist/` is committed so you can inspect the default output, but always re-run `npm run build` before pushing to ensure it matches the source.
 - The build step automatically removes `dist/` before emitting new files, so you rarely need to clean manually.
 - For cache issues during development, prefer `npm run dev` to leverage Vite's module graph instead of loading from `dist/`.
