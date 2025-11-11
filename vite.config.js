@@ -30,12 +30,17 @@ function copyDir(src, dest, { minifyJs = false } = {}) {
 }
 
 function demoAssetsPlugin() {
+  let shouldMinify = true;
   return {
     name: 'demo-assets-plugin',
+    configResolved(config) {
+      const minifySetting = config.build.minify;
+      shouldMinify = minifySetting !== false && minifySetting !== 'false';
+    },
     writeBundle() {
       const htmlForDist = readFileSync(demoHtml, 'utf8').replaceAll('/dist/my-math.es.js', './my-math.es.js');
       writeFileSync(resolve(distDir, 'index.html'), htmlForDist);
-      copyDir(demoSrcDir, resolve(distDir, 'src'), { minifyJs: true });
+      copyDir(demoSrcDir, resolve(distDir, 'src'), { minifyJs: shouldMinify });
     },
   };
 }
