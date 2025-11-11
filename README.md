@@ -27,7 +27,7 @@ src/catalog.js      # Catalog shell importing sumThree(5,10,15)
 src/footer.js       # Footer shell importing sumThree(7,8,9)
 lib/math.js         # Primitive math helpers (add, multiply)
 lib/advancedMath.js # Higher-level helpers (e.g., sumThree)
-lib/index.js        # Library public API (re-exports helpers)
+lib/index.js        # Library public API + load-count instrumentation
 vite.config.js      # Vite library-mode configuration
 ```
 
@@ -36,6 +36,7 @@ vite.config.js      # Vite library-mode configuration
 2. `npm run build` runs Vite in library mode, emitting `dist/my-math.es.js` and copying `index.html` + `src/` into `dist/` via a small post-build plugin.
 3. `index.html` defines an import map so the browser can resolve `import { sumThree } from 'my-math'` inside any shell without bundling; the dev server uses the alias instead of the built file.
 4. `src/index.js` acts as the host that mounts `src/header.js`, `src/catalog.js`, and `src/footer.js`. Each shell calls `sumThree` with unique inputs and writes the value into its own DOM root, showing how multiple independently-owned sections can depend on the same shared bundle.
+5. The library increments a global `__MY_MATH_LOAD_COUNT__` the first time it is executed and exposes `getLoadCount()`, letting every shell surface the shared load count (it should stay at `1` no matter how many sections import it).
 
 ## Distribution output
 After `npm run build`, the `dist/` folder contains:

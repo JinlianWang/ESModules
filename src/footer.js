@@ -1,4 +1,4 @@
-import { sumThree } from 'my-math';
+import { sumThree, getLoadCount } from 'my-math';
 
 export function mountFooter(rootId = 'footer-root') {
     const root = document.getElementById(rootId);
@@ -7,8 +7,11 @@ export function mountFooter(rootId = 'footer-root') {
     }
 
     const total = sumThree(7, 8, 9);
+    const loadCount = getLoadCount();
+
     root.innerHTML = `
         <h2>Footer Shell</h2>
         <p>sumThree(7, 8, 9) = <strong>${total}</strong></p>
+        <p class="load-count">Shared bundle load count: <strong>${loadCount}</strong></p>
     `;
 }

@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 - `lib/` holds the publishable ES modules. `lib/math.js` defines primitives, `lib/advancedMath.js` composes helpers, and `lib/index.js` re-exports the public API consumed during builds.
-- `src/` now represents a micro-frontend host: `src/index.js` boots the shell triad (`header.js`, `catalog.js`, `footer.js`), each mounting into its own root and calling `sumThree` with different arguments.
+- `src/` now represents a micro-frontend host: `src/index.js` boots the shell triad (`header.js`, `catalog.js`, `footer.js`), each mounting into its own root, calling `sumThree` with different arguments, and showing the shared `getLoadCount()` output to prove the bundle is loaded once.
 - `index.html` wires the import map and declares the shell root elements; keep it minimal so the copy step in `vite.config.js` remains simple.
 - `dist/` is generated; never edit by hand. After `npm run build`, expect `dist/my-math.es.js`, the demo HTML, and a mirrored `src/` directory.
 
@@ -19,7 +19,8 @@
 
 ## Testing Guidelines
 - There is no formal test harness yet; rely on the browser demo as a smoke test by running `npm run dev` (development) or `npm run preview` (production bundle).
-- Verify that each shell renders independently: header should show `sumThree(2,3,4)`, catalog `sumThree(5,10,15)`, and footer `sumThree(7,8,9)`. Adjust inputs if you add more shells.
+- Verify that each shell renders independently: header should show `sumThree(2,3,4)`, catalog `sumThree(5,10,15)`, and footer `sumThree(7,8,9)`. Adjust inputs if you add more shells but keep a unique message for each.
+- Confirm the shared load indicator stays at `1`. The `lib/index.js` entry bumps `__MY_MATH_LOAD_COUNT__` once and `getLoadCount()` should report the same value in every shell.
 - When adding new behavior, update or add a shell module that demonstrates it and, optionally, log assertions to the console. If you add automated tests, place them under `src/` or a new `tests/` folder and document the command.
 
 ## Commit & Pull Request Guidelines
