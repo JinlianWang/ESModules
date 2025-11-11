@@ -1,15 +1,15 @@
-function e(_, n) {
-  return _ + n;
+function add(a, b) {
+  return a + b;
 }
-function u(_, n, t) {
-  return e(e(_, n), t);
+function sumThree(a, b, c) {
+  return add(add(a, b), c);
 }
-const o = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : {};
-o.__MY_MATH_LOAD_COUNT__ = (o.__MY_MATH_LOAD_COUNT__ ?? 0) + 1;
-function d() {
-  return o.__MY_MATH_LOAD_COUNT__;
+const globalScope = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : {};
+globalScope.__MY_MATH_LOAD_COUNT__ = (globalScope.__MY_MATH_LOAD_COUNT__ ?? 0) + 1;
+function getLoadCount() {
+  return globalScope.__MY_MATH_LOAD_COUNT__;
 }
 export {
-  d as getLoadCount,
-  u as sumThree
+  getLoadCount,
+  sumThree
 };
