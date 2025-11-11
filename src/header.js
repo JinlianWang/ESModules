@@ -1,6 +1,9 @@
 import { sumThree, getLoadCount } from 'my-math';
 
-export function mountHeader(rootId = 'header-root') {
+export function mountHeader(rootId) {
+    if (!rootId) {
+        throw new Error('mountHeader requires a rootId');
+    }
     const root = document.getElementById(rootId);
     if (!root) {
         return;

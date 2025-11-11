@@ -36,9 +36,10 @@ vite.config.js        # Vite library-mode configuration
 1. `lib/index.js` is the build entry and re-exports everything that should ship in the library bundle.
 2. `npm run build` runs Vite in library mode, emitting `dist/my-math.es.js` and copying `index.html` + `src/` into `dist/` via a small post-build plugin.
 3. `index.html` defines an import map so the browser can resolve `import { sumThree } from 'my-math'` inside any shell without bundling; the dev server uses the alias instead of the built file.
-4. `src/index.js` acts as the host that mounts `src/header.js`, `src/catalog.js`, and `src/footer.js`. Each shell calls `sumThree` with unique inputs and writes the value into its own DOM root, showing how multiple independently-owned sections can depend on the same shared bundle.
+4. `src/index.js` acts as the host that mounts `src/header.js` and `src/catalog.js`, leaving the footer root empty until it is explicitly requested. Each shell calls `sumThree` with unique inputs and writes the value into its own DOM root, showing how multiple independently-owned sections can depend on the same shared bundle.
 5. The library increments a global `__MY_MATH_LOAD_COUNT__` the first time it is executed and exposes `getLoadCount()`, letting every shell surface the shared load count (it should stay at `1` no matter how many sections import it).
 6. The catalog shell includes a "Load Happy Face Widget" button. Clicking it lazy-loads `src/happy-face-widget.js` via dynamic `import()`, registers a Web Component that renders ASCII art, and injects it into the catalog slot without pulling any additional dependencies.
+7. The same shell also provides a "Load Footer Section" button. The handler dynamically imports `src/footer.js` and calls `mountFooter()` so the footer micro frontend only ships when requested, demonstrating cross-shell lazy loading.
 
 ## Distribution output
 After `npm run build`, the `dist/` folder contains:

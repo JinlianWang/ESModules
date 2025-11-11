@@ -1,6 +1,9 @@
 import { sumThree, getLoadCount } from 'my-math';
 
-export function mountFooter(rootId = 'footer-root') {
+export function mountFooter(rootId) {
+    if (!rootId) {
+        throw new Error('mountFooter requires a rootId');
+    }
     const root = document.getElementById(rootId);
     if (!root) {
         return;
