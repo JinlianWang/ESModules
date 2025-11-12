@@ -38,7 +38,7 @@ function demoAssetsPlugin() {
       shouldMinify = minifySetting !== false && minifySetting !== 'false';
     },
     writeBundle() {
-      const htmlForDist = readFileSync(demoHtml, 'utf8').replaceAll('/dist/my-math.es.js', './my-math.es.js');
+      const htmlForDist = readFileSync(demoHtml, 'utf8').replaceAll('/dist/lib/my-math.es.js', './lib/my-math.es.js');
       writeFileSync(resolve(distDir, 'index.html'), htmlForDist);
       copyDir(demoSrcDir, resolve(distDir, 'src'), { minifyJs: shouldMinify });
     },
@@ -66,7 +66,7 @@ export default defineConfig({
     lib: {
       entry: libEntry,
       formats: ['es'],
-      fileName: () => 'my-math.es.js',
+      fileName: () => 'lib/my-math.es.js',
     },
   },
 });

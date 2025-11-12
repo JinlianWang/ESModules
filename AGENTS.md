@@ -4,7 +4,7 @@
 - `lib/` holds the publishable ES modules. `lib/math.js` defines primitives, `lib/advancedMath.js` composes helpers, and `lib/index.js` re-exports the public API consumed during builds.
 - `src/` now represents a micro-frontend host: `src/index.js` boots the header and catalog shells immediately, while the footer shell is lazy loaded via the catalog. Each shell mounts into its own root, calls `sumThree` with different arguments, and shows the shared `getLoadCount()` output. `src/happy-face-widget.js` defines a dependency-free Web Component that renders ASCII art when the catalog shell lazy-loads it.
 - `index.html` wires the import map and declares the shell root elements; keep it minimal so the copy step in `vite.config.js` remains simple.
-- `dist/` is generated; never edit by hand. After `npm run build`, expect `dist/my-math.es.js`, the demo HTML, and a mirrored `src/` directory.
+- `dist/` is generated; never edit by hand. After `npm run build`, expect `dist/lib/my-math.es.js`, the demo HTML, and a mirrored `src/` directory.
 
 ## Build, Test, and Development Commands
 - `npm install` installs the single dependency (Vite 5).
