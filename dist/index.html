@@ -19,12 +19,13 @@
 </head>
 
 <body>
-    <h1>Micro Frontend Math Demo</h1>
-    <p>Header, catalog, and footer shells all import <code>my-math.es.js</code> and render their own calculations.</p>
+    <h1 id="demo-title">Micro Frontend Math Demo</h1>
 
-    <section id="header-root" class="mf-section"></section>
-    <section id="catalog-root" class="mf-section"></section>
-    <section id="footer-root" class="mf-section"></section>
+    <main id="sections-root">
+        <section id="header-root"></section>
+        <section id="catalog-root"></section>
+        <section id="footer-root"></section>
+    </main>
 
     <!-- App entry -->
     <script type="module" src="/src/index.js"></script>
