@@ -62,6 +62,12 @@ export default defineConfig({
       'my-math': libEntry,
     },
   },
+  css: {
+    modules: {
+      generateScopedName: 'mf-[name]__[local]__[hash:base64:6]',
+      hashPrefix: 'my-math-demo',
+    },
+  },
   build: {
     lib: {
       entry: libEntry,
