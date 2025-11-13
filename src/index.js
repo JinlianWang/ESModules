@@ -1,3 +1,4 @@
+import './styles.css';
 import { mountHeader } from './header.js';
 import { mountCatalog } from './catalog.js';
 
